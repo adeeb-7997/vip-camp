@@ -98,7 +98,7 @@ sections = [
     {
         'title': 'خيمة المرعي (المجلس)',
         'text': 'مجلس الضيافة الرئيس في المحمية، فيه تُستقبل الوجوه الكريمة، وتُدار السوالف على نار هادئة، وتُقدَّم القهوة العربية التقليدية.',
-        'img': 'https://www.vevor.com/ar/diy-ideas/how-to-set-up-a-tent-indoors-without-stakes/?srsltid=AfmBOorp-zfeccfbC-sAxWZksJSqNXCpsVPUfVpHrsgjMsOObyEZLiQe'
+        'img': ''
 
     {
         'title': 'خيرات المحمية',
@@ -143,6 +143,7 @@ for sec in sections:
 
 # ================= الخاتمة =================
 st.markdown('<div class="footer">سعدنا بزيارتكم، حياكم الله في محمية غلة الخير © 2025</div>', unsafe_allow_html=True)
+
 
 
 
