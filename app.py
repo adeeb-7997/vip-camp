@@ -18,23 +18,13 @@ def get_base64_of_bin_file(path):
 
 logo_base64 = get_base64_of_bin_file("logo.png")
 
-# ================= CSS (RTL صحيح + خط ناعم) =================
+# ================= CSS (لوحة تعريف – بسيطة – RTL ثابت) =================
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500&display=swap');
 
-:root{
-  --text:#2b2b2b;
-  --muted:#6b6b6b;
-  --bg:#fbfbf8;
-}
-
 html, body {
   direction: rtl !important;
-}
-
-.stApp {
-  background-color: var(--bg);
 }
 
 * {
@@ -42,107 +32,115 @@ html, body {
   text-align: right;
 }
 
-#MainMenu, header, footer {visibility: hidden;}
+.stApp{
+  background-color:#fbfbf8;
+}
+
+#MainMenu, header, footer {visibility:hidden;}
 
 /* ===== الشعار ===== */
-.logo {
-  text-align: center !important;
-  margin: 60px 0 30px;
+.logo{
+  text-align:center !important;
+  margin:70px 0 40px;
 }
-.logo img {
-  max-width: 220px;
+.logo img{max-width:220px;}
+
+/* ===== العنوان ===== */
+.title{
+  text-align:center !important;
+  font-size:2.2rem;
+  color:#2b2b2b;
+  margin-bottom:12px;
+}
+.subtitle{
+  text-align:center !important;
+  font-size:1.05rem;
+  color:#6b6b6b;
+  margin-bottom:70px;
 }
 
-/* ===== العناوين ===== */
-.title {
-  text-align: center !important;
-  font-size: 2.3rem;
-  color: var(--text);
-  margin-bottom: 10px;
+/* ===== اللوحة ===== */
+.panel{
+  max-width:900px;
+  margin:0 auto 80px;
 }
-.subtitle {
-  text-align: center !important;
-  font-size: 1.1rem;
-  color: var(--muted);
-  margin-bottom: 60px;
+.panel h3{
+  font-size:1.5rem;
+  margin-bottom:14px;
+  color:#2b2b2b;
 }
-
-/* ===== الأقسام ===== */
-.section {
-  max-width: 1000px;
-  margin: 0 auto 70px;
+.panel p{
+  font-size:1.05rem;
+  color:#555;
+  line-height:2.1;
 }
-.section h3 {
-  font-size: 1.6rem;
-  margin-bottom: 12px;
-}
-.section p {
-  font-size: 1.05rem;
-  color: var(--muted);
-  line-height: 2;
-}
-.section img {
-  width: 100%;
-  border-radius: 14px;
-  margin: 25px 0;
+.panel img{
+  width:100%;
+  border-radius:14px;
+  margin:28px 0;
 }
 
-.footer {
-  text-align: center !important;
-  color: #aaa;
-  margin: 80px 0 30px;
+.footer{
+  text-align:center !important;
+  color:#aaa;
+  margin:80px 0 30px;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # ================= الشعار =================
 if logo_base64:
-    st.markdown(
-        f'<div class="logo"><img src="data:image/png;base64,{logo_base64}"></div>',
-        unsafe_allow_html=True
-    )
+    st.markdown(f'<div class="logo"><img src="data:image/png;base64,{logo_base64}"></div>', unsafe_allow_html=True)
 else:
     st.markdown('<div class="logo"><h2>محمية غلة الخير</h2></div>', unsafe_allow_html=True)
 
 # ================= العنوان =================
 st.markdown('<div class="title">محمية غلة الخير</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">مكان مخصص لاستقبال الضيوف وتقديم الضيافة في أجواء طبيعية هادئة</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">لوحة تعريفية لمكان خُصص لاستقبال الضيوف وتقديم الضيافة</div>', unsafe_allow_html=True)
 
-# ================= الأقسام =================
-
-# خيمة المرعي
+# ================= لوحة التعريف =================
 st.markdown("""
-<div class="section">
-  <h3>خيمة المرعي (خيمة المجلس)</h3>
-  <p>
-    خيمة المجلس هي قلب المحمية، أُعدّت لاستقبال الضيوف في أجواء من الوقار والكرم،
-    بجلسات فاخرة تجمع بين الأصالة والراحة، ومكان يليق بالضيوف والتشريف.
-  </p>
-  <img src="https://images.unsplash.com/photo-1510739859545-e7b9e979de86?q=80&w=1400">
+<div class="panel">
+<h3>عن المحمية</h3>
+<p>
+...
+</p>
 </div>
-""", unsafe_allow_html=True)
 
-# خيرات المحمية
-st.markdown("""
-<div class="section">
-  <h3>خيرات المحمية</h3>
-  <p>
-    نعتني بإنتاج خيرات المحمية من الخضار الطازجة والحليب ومشتقاته،
-    لتُقدّم للضيوف بجودة عالية وطابع طبيعي يعكس بساطة المكان ونقاءه.
-  </p>
-  <img src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?q=80&w=1400">
+<div class="panel">
+<h3>خيمة المرعي (خيمة المجلس)</h3>
+<p>
+خيمة المجلس هي مقر استقبال الضيوف، أُعدّت بجلسات عربية فاخرة تعكس روح الكرم والأصالة،
+وتُقام فيها المجالس واللقاءات في أجواء هادئة وخاصة.
+</p>
+<img src="https://images.unsplash.com/photo-1510739859545-e7b9e979de86?q=80&w=1400">
 </div>
-""", unsafe_allow_html=True)
 
-# محمية الربيع
-st.markdown("""
-<div class="section">
-  <h3>محمية الربيع</h3>
-  <p>
-    في موسم الربيع، تكتسي المحمية بالخضرة وتنبض بالحياة، حيث المساحات المفتوحة
-    والمراعي الطبيعية التي تبعث الراحة والسكينة في النفوس.
-  </p>
-  <img src="https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?q=80&w=1400">
+<div class="panel">
+<h3>خيرات المحمية</h3>
+<p>
+تضم المحمية خيرات طبيعية من الخضار والحليب ومشتقاته،
+وتُقدَّم للضيوف كجزء من الضيافة بما يعكس بساطة المكان وجودة إنتاجه.
+</p>
+<img src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?q=80&w=1400">
+</div>
+
+<div class="panel">
+<h3>الإبل</h3>
+<p>
+تحتضن المحمية عددًا من الإبل، وتُعد جزءًا من هوية المكان وتراثه،
+وتُشاهد في بيئتها الطبيعية ضمن أجواء هادئة تحافظ على أصالتها.
+</p>
+<img src="https://images.unsplash.com/photo-1557223563-703333333a41?q=80&w=1400">
+</div>
+
+<div class="panel">
+<h3>محمية الربيع</h3>
+<p>
+في موسم الربيع تكتسي المحمية بالخضرة، وتزدهر المراعي الطبيعية،
+مما يضفي على المكان جمالًا وراحةً تعكس روح الطبيعة.
+</p>
+<img src="https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?q=80&w=1400">
 </div>
 """, unsafe_allow_html=True)
 
