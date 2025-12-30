@@ -99,7 +99,7 @@ sections = [
     {
 'title': 'خيمة المرعي (المجلس)',
 'text': 'مجلس الضيافة الرئيس في المحمية، فيه تُستقبل الوجوه الكريمة، وتُدار السوالف على نار هادئة، وتُقدَّم القهوة العربية التقليدية.',
-'img': 'https://images.unsplash.com/photo-1510739859545-e7b9e979de86?q=80&w=1400'
+'img': 'https://ar.tripadvisor.com/Hotel_Review-g294209-d943370-Reviews-Porini_Lion_Camp-Maasai_Mara_National_Reserve_Rift_Valley_Province.html'
 },
     {
         'title': 'خيرات المحمية',
@@ -144,6 +144,7 @@ for sec in sections:
 
 # ================= الخاتمة =================
 st.markdown('<div class="footer">سعدنا بزيارتكم، حياكم الله في محمية غلة الخير © 2025</div>', unsafe_allow_html=True)
+
 
 
 
