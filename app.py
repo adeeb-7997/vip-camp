@@ -85,14 +85,14 @@ else:
     st.markdown('<div class="logo"><h2>محمية غلة الخير</h2></div>', unsafe_allow_html=True)
 
 # ================= العنوان =================
-st.markdown('<div class="title">محمية غلة الخير</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">لوحة تعريفية تراثية بدوية للضيوف</div>', unsafe_allow_html=True)
+st.markdown('<div class="title">حياكم الله في محمية غلة الخير</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">واحة الضيافة والأصالة في قلب الطبيعة</div>', unsafe_allow_html=True)
 
 # ================= الأقسام =================
 sections = [
     {
         'title': 'عن المحمية',
-        'text': 'المحمية ديار خاصة، أُنشئت لتكون مجلسًا للضيف وراحة للبال، بعيدًا عن الزحام والتكلّف. هنا الكرم عنوان، والضيافة عادة. لا تأجير، لا تجارة… فقط تراث وكرم وأصالة.',
+        'text': 'محمية غلة الخير أنشئت لتكون مجلسًا للضيف وراحة البال، بعيدًا عن الزحام والتكلّف.',
         'img': ''
     },
     {
