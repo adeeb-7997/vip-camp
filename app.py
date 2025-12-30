@@ -109,7 +109,7 @@ sections = [
     {
         'title': 'الإبل',
         'text': 'الإبل جزء من هوية المكان، شاهدة على تراث أصيل، وحاضرة كما كانت في حياة أهل البادية. نرجو عدم إزعاج الإبل أو إطعامها دون إذن.',
-        'img': 'https://images.unsplash.com/photo-1557223563-703333333a41?q=80&w=1400'
+        'img': 'https://cnn-arabic-images.cnn.io/cloudinary/image/upload/w_1280,c_scale,q_auto/cnnarabic/2023/01/11/images/230397.jpg'
     },
     {
         'title': 'محمية الربيع',
@@ -144,3 +144,4 @@ for sec in sections:
 
 # ================= الخاتمة =================
 st.markdown('<div class="footer">سعدنا بزيارتكم، حياكم الله في محمية غلة الخير © 2025</div>', unsafe_allow_html=True)
+
