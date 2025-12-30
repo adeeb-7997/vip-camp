@@ -5,148 +5,164 @@ import os
 # --- إعدادات الصفحة ---
 st.set_page_config(
     page_title="محمية غلة الخير | M.F",
-    page_icon="🐪",
+    page_icon="🌿",
     layout="wide"
 )
 
-# --- دالة حل مشكلة الشعار ---
+# --- دالة معالجة الشعار ---
 def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
+    try:
+        with open(bin_file, 'rb') as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    except:
+        return None
 
-# تأكد أن ملف الصورة موجود بنفس المجلد وبنفس الاسم
-logo_filename = "logo.png" 
+logo_base64 = get_base64_of_bin_file("logo.png")
 
-if os.path.exists(logo_filename):
-    encoded_logo = get_base64_of_bin_file(logo_filename)
-    logo_html = f'<img src="data:image/png;base64,{encoded_logo}" class="logo-img">'
-else:
-    logo_html = "<h1 style='color:#d4af37;'>محمية غلة الخير</h1>"
-
-# --- تصميم الـ CSS المتقدم ---
+# --- CSS التنسيق العصري الفاتح ---
 st.markdown(f"""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;500;700&display=swap');
 
-    /* تغيير الخلفية إلى البني العميق الفاخر */
+    /* الخلفية فاتحة وعصرية */
     .stApp {{
-        background: linear-gradient(135deg, #1e1510 0%, #3d2b1f 100%);
-        color: #f4ece1;
+        background-color: #fcfaf7;
+        color: #4a4a4a;
         direction: rtl;
     }}
 
-    /* تنسيق المحتوى ليكون من اليمين */
-    div[data-testid="stVerticalBlock"] {{
-        direction: rtl;
+    /* تحسين الخطوط والاتجاه */
+    html, body, [class*="css"] {{
+        font-family: 'Tajawal', sans-serif !important;
         text-align: right;
     }}
 
-    /* تحسين شكل الشعار والتحكم في ألوانه بصرياً */
+    /* تصميم الشعار */
     .logo-container {{
         text-align: center;
-        padding: 40px 0;
+        padding: 20px 0;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        margin-bottom: 40px;
     }}
     .logo-img {{
-        max-width: 350px;
-        /* هذا الفلتر يحسن تباين الشعار الذهبي */
-        filter: drop-shadow(0px 0px 15px rgba(212, 175, 55, 0.4)) contrast(1.1);
+        max-width: 280px;
+        filter: brightness(1.1); /* تفتيح الشعار إذا كان غامقاً */
     }}
 
-    /* البطاقات بتصميم جلدي فاخر */
-    .vip-card {{
-        background: rgba(255, 255, 255, 0.03);
-        border-right: 4px solid #d4af37; /* خط ذهبي جهة اليمين */
-        border-radius: 10px;
-        padding: 30px;
-        margin: 15px 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    /* بطاقات الأقسام (تصميم نظيف وعصري) */
+    .section-card {{
+        background: white;
+        border-radius: 20px;
+        padding: 0px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        border: 1px solid #f0f0f0;
+        overflow: hidden;
         transition: 0.3s;
     }}
-    .vip-card:hover {{
-        background: rgba(212, 175, 55, 0.05);
-        transform: scale(1.02);
+    .section-card:hover {{
+        transform: translateY(-10px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }}
+    .card-content {{
+        padding: 20px;
+        text-align: center;
     }}
 
     /* العناوين */
     h1, h2, h3 {{
         font-family: 'Amiri', serif !important;
-        color: #d4af37 !important;
+        color: #2c3e50 !important;
+    }}
+    .gold-text {{ color: #d4af37 !important; }}
+
+    /* أزرار وحقول النموذج */
+    .stButton>button {{
+        background: #2e7d32; /* أخضر طبيعي */
+        color: white;
+        border-radius: 10px;
+        width: 100%;
+        border: none;
     }}
     
-    /* أيقونات الأقسام */
-    .icon-style {{
-        font-size: 40px;
-        margin-bottom: 15px;
-        display: block;
-    }}
-
-    /* إخفاء واجهة ستريمليت الافتراضية */
     #MainMenu, header, footer {{visibility: hidden;}}
     </style>
     """, unsafe_allow_html=True)
 
-# --- محتوى الموقع ---
+# --- الهيدر والشعار ---
+if logo_base64:
+    st.markdown(f'<div class="logo-container"><img src="data:image/png;base64,{logo_base64}" class="logo-img"></div>', unsafe_allow_html=True)
+else:
+    st.markdown('<div class="logo-container"><h1>محمية غلة الخير</h1></div>', unsafe_allow_html=True)
 
-# عرض الشعار
-st.markdown(f'<div class="logo-container">{logo_html}</div>', unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center;'>مرحباً بكم في <span class='gold-text'>غلة الخير</span></h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; font-size:1.2em; color:#7f8c8d;'>واحة الضيافة والأصالة في قلب الطبيعة</p>", unsafe_allow_html=True)
 
-st.markdown("<h2 style='text-align:center;'>مجلس الضيافة الخاص</h2>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#f4ece1; font-size:1.2em;'>نتشرف بزيارتكم في محمية ومزرعة غلة الخير</p>", unsafe_allow_html=True)
+st.write("##")
 
-st.write("---")
-
-# توزيع الأقسام
+# --- الأقسام الرئيسية مع الصور ---
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.markdown("""
-    <div class="vip-card">
-        <span class="icon-style">🏛️</span>
-        <h3>المجلس الملكي</h3>
-        <p>خصوصية تامة وتجهيزات تليق بمقام ضيوفنا الكرام، في قلب الطبيعة الهادئة.</p>
+    # صورة خيمة فخمة (خيمة المرعي)
+    st.markdown(f"""
+    <div class="section-card">
+        <img src="https://images.unsplash.com/photo-1510739859545-e7b9e979de86?q=80&w=800" style="width:100%; height:200px; object-fit:cover;">
+        <div class="card-content">
+            <h3>⛺ خيمة المرعي</h3>
+            <p>جلسات عربية أصيلة بلمسات عصرية، مجهزة لاستقبالكم في أجواء من الفخامة والهدوء.</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
-    st.markdown("""
-    <div class="vip-card">
-        <span class="icon-style">🦌</span>
-        <h3>المحمية الخاصة</h3>
-        <p>جولة بين سلالات الإبل والمها العربي، تجربة برية فريدة بروح الأصالة.</p>
+    # صورة ناقة في مكان ربيع
+    st.markdown(f"""
+    <div class="section-card">
+        <img src="https://images.unsplash.com/photo-1557223563-703333333a41?q=80&w=800" style="width:100%; height:200px; object-fit:cover;">
+        <div class="card-content">
+            <h3>🦌 المحمية الخاصة</h3>
+            <p>شاهدوا جمال النوق في مرعاها الأخضر وسط الطبيعة البكر والربيع المزهر.</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
 with col3:
-    st.markdown("""
-    <div class="vip-card">
-        <span class="icon-style">🌳</span>
-        <h3>خيرات المزرعة</h3>
-        <p>نقدم لضيوفنا أجود ما تنتجه مزارعنا من تمور وفواكه عضوية طازجة.</p>
+    # صورة خيرات المزرعة
+    st.markdown(f"""
+    <div class="section-card">
+        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=800" style="width:100%; height:200px; object-fit:cover;">
+        <div class="card-content">
+            <h3>🌾 خيرات المزرعة</h3>
+            <p>نحصد لكم يومياً أجود أنواع الخضار والقمح العضوي من قلب مزارعنا لتصل لضيافتكم.</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
-st.write("##")
-
-# قسم الصور (تأكد من استبدالها بصور حقيقية لاحقاً)
-st.markdown("<h3>📸 لقطات من المحمية</h3>", unsafe_allow_html=True)
-# استخدم صوراً عرضية (Landscape) لجمالية التصميم
-img_url = "https://images.unsplash.com/photo-1542332213-31f87348057f?auto=format&fit=crop&w=1200&q=80"
-st.image(img_url, caption="غروب الشمس في غلة الخير", use_column_width=True)
-
-# سجل الزوار بتنسيق أنيق
+# --- معرض الصور (لقطات من المخيم) ---
 st.write("---")
-st.markdown("<h3 style='text-align:center;'>🤝 تواصل معنا</h3>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center;'>📸 لقطات من المخيم</h2>", unsafe_allow_html=True)
+
+img_col1, img_col2 = st.columns(2)
+with img_col1:
+    st.image("https://images.unsplash.com/photo-1493246507139-91e8bef99c17?q=80&w=800", caption="المناظر الطبيعية حول المخيم", use_container_width=True)
+with img_col2:
+    st.image("https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?q=80&w=800", caption="أجواء المساء والسمر", use_container_width=True)
+
+# --- سجل الزوار ---
+st.write("---")
+st.markdown("<h3 style='text-align:center;'>🤝 يسعدنا تواصلكم</h3>", unsafe_allow_html=True)
 
 c1, c2, c3 = st.columns([1,2,1])
 with c2:
-    with st.form("visitor_form"):
+    with st.form("contact"):
         name = st.text_input("الاسم الكريم")
-        contact = st.text_input("رقم الجوال / وسيلة التواصل")
-        note = st.text_area("رسالة إلى المضيف")
-        submitted = st.form_submit_button("إرسال البيانات")
+        msg = st.text_area("رسالة للمضيف")
+        submitted = st.form_submit_button("إرسال")
         if submitted:
-            st.success("تم استلام بياناتك بنجاح، نتشرف بك.")
+            st.success("شكراً لك، تم استلام رسالتك.")
 
 # تذييل
-st.markdown("<p style='text-align:center; color:#888; margin-top:50px;'>محمية غلة الخير - M.F © 2024</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#bdc3c7; margin-top:50px;'>محمية غلة الخير - M.F © 2025</p>", unsafe_allow_html=True)
