@@ -3,8 +3,8 @@ import base64
 
 # ================= إعدادات الصفحة =================
 st.set_page_config(
-    page_title="محمية غلة الخير | M.F",
-    page_icon="🌾",
+    page_title="محمية غلة الخير",
+    page_icon="🌿",
     layout="wide"
 )
 
@@ -18,16 +18,15 @@ def get_base64_of_bin_file(path):
 
 logo_base64 = get_base64_of_bin_file("logo.png")
 
-# ================= CSS (فاخر – هادئ – بدون أيقونات مزعجة) =================
+# ================= CSS (هادئ – ضيافة – بدون صناديق أو حجز) =================
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600&family=Reem+Kufi:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500&display=swap');
 
 :root{
-  --primary:#6b7d4a;   /* زيتوني أنيق */
-  --dark:#2f3a2e;
-  --bg:#f4f5f2;
-  --card:#ffffff;
+  --text:#2f2f2f;
+  --soft:#6f6f6f;
+  --bg:#fbfbf9;
 }
 
 .stApp{
@@ -36,127 +35,95 @@ st.markdown("""
 }
 
 html,body,[class*="css"]{
-  font-family:'IBM Plex Sans Arabic', sans-serif !important;
+  font-family:'Alexandria', sans-serif !important;
+  text-align:right;
 }
 
 #MainMenu,header,footer{visibility:hidden;}
 
-/* ===== Header ===== */
-.header{
-  background:#ffffff;
-  border-radius:24px;
-  padding:50px 30px;
-  margin-bottom:60px;
+/* ===== الشعار ===== */
+.logo{
   text-align:center;
-  box-shadow:0 20px 40px rgba(0,0,0,.06);
+  margin:60px 0 40px;
 }
-.header h1{
-  font-family:'Reem Kufi', sans-serif;
-  font-size:2.8rem;
-  color:var(--dark);
+.logo img{
+  max-width:220px;
+}
+
+/* ===== العناوين ===== */
+.title{
+  text-align:center;
+  font-size:2.4rem;
+  color:var(--text);
   margin-bottom:10px;
 }
-.header p{
+
+.subtitle{
+  text-align:center;
   font-size:1.1rem;
-  color:#6d6d6d;
+  color:var(--soft);
+  margin-bottom:60px;
 }
 
-.logo img{
-  max-width:200px;
-  margin-bottom:20px;
-}
-
-/* ===== Sections ===== */
+/* ===== أقسام نصية هادئة ===== */
 .section{
-  background:var(--card);
-  border-radius:22px;
-  padding:30px;
-  margin-bottom:40px;
-  box-shadow:0 15px 35px rgba(0,0,0,.05);
+  max-width:900px;
+  margin:0 auto 60px;
+  line-height:2;
+  color:var(--text);
 }
+
 .section h3{
-  font-family:'Reem Kufi', sans-serif;
-  color:var(--primary);
+  font-size:1.5rem;
   margin-bottom:12px;
 }
-.section p{color:#555; line-height:1.8}
 
+.section p{color:var(--soft); font-size:1.05rem}
+
+/* ===== صور ===== */
 .section img{
   width:100%;
-  border-radius:18px;
-  margin-bottom:18px;
-}
-
-/* ===== Form ===== */
-.stButton>button{
-  background:var(--primary);
-  color:white;
   border-radius:14px;
-  border:none;
-  padding:12px;
+  margin:25px 0;
 }
 
 .footer{
   text-align:center;
-  color:#999;
-  margin-top:70px;
+  color:#aaa;
+  margin:80px 0 30px;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# ================= Header =================
-st.markdown('<div class="header">', unsafe_allow_html=True)
-
+# ================= الشعار =================
 if logo_base64:
     st.markdown(f'<div class="logo"><img src="data:image/png;base64,{logo_base64}"></div>', unsafe_allow_html=True)
+else:
+    st.markdown('<div class="logo"><h2>محمية غلة الخير</h2></div>', unsafe_allow_html=True)
 
-st.markdown("""
-<h1>محمية غلة الخير</h1>
-<p>تجربة ريفية هادئة بطابع فاخر بعيدًا عن الضجيج</p>
-</div>
-""", unsafe_allow_html=True)
+# ================= العنوان =================
+st.markdown('<div class="title">محمية غلة الخير</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">مكان للضيافة واستقبال الضيوف في أجواء طبيعية هادئة</div>', unsafe_allow_html=True)
 
-# ================= الأقسام =================
-col1,col2 = st.columns(2)
-
-with col1:
-    st.markdown("""
-    <div class="section">
-      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=900">
-      <h3>المجالس الريفية</h3>
-      <p>مساحات جلوس واسعة بتصميم هادئ، مناسبة للعائلات والضيوف الباحثين عن الخصوصية والسكينة.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <div class="section">
-      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=900">
-      <h3>الطبيعة المفتوحة</h3>
-      <p>مساحات خضراء وإطلالات طبيعية تمنحك صفاء الذهن ومتعة الاسترخاء.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-# ================= تجربة الضيف =================
+# ================= المحتوى =================
 st.markdown("""
 <div class="section">
-  <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1200">
-  <h3>تجربة متكاملة</h3>
-  <p>من لحظة الوصول وحتى المغادرة، نحرص على تقديم تجربة هادئة تعكس كرم الضيافة وروح المكان.</p>
+<h3>عن المحمية</h3>
+<p>
+محمية غلة الخير خُصصت لاستقبال الضيوف وتقديم الضيافة في بيئة طبيعية هادئة، بعيدًا عن مفهوم الإيجار أو الاستضافة التجارية.
+نرحب بضيوفنا بروح الكرم والأصالة، حيث البساطة والراحة والخصوصية.
+</p>
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200">
+</div>
+
+<div class="section">
+<h3>الأجواء</h3>
+<p>
+أجواء طبيعية مفتوحة، جلسات هادئة، ومكان يليق بالضيوف الباحثين عن السكينة والتقدير.
+</p>
+<img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1200">
 </div>
 """, unsafe_allow_html=True)
-
-# ================= تواصل =================
-st.markdown('<div class="section">', unsafe_allow_html=True)
-
-with st.form("contact"):
-    name = st.text_input("الاسم")
-    msg = st.text_area("رسالتك")
-    send = st.form_submit_button("إرسال")
-    if send:
-        st.success("تم استلام رسالتك، نرحب بك دائمًا")
-
-st.markdown('</div>', unsafe_allow_html=True)
 
 # ================= Footer =================
 st.markdown('<div class="footer">محمية غلة الخير © 2025</div>', unsafe_allow_html=True)
