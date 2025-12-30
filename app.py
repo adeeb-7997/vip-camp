@@ -1,186 +1,152 @@
 import streamlit as st
 import base64
+import os
 
-# --- إعدادات الصفحة الأساسية ---
+# --- إعدادات الصفحة ---
 st.set_page_config(
     page_title="محمية غلة الخير | M.F",
     page_icon="🐪",
-    layout="wide",
-    initial_sidebar_state="collapsed"
+    layout="wide"
 )
 
-# --- دالة مساعدة لتحويل الصورة إلى كود (لتعمل الشعار بداخل التصميم) ---
-def get_img_as_base64(file):
-    with open(file, "rb") as f:
+# --- دالة حل مشكلة الشعار ---
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
         data = f.read()
     return base64.b64encode(data).decode()
 
-# حاول تحميل الشعار، إذا لم يوجد نستخدم نص بديل (لتجنب الخطأ)
-try:
-    logo_img = get_img_as_base64("logo.png")
-    logo_html = f'<img src="data:image/png;base64,{logo_img}" class="logo-img">'
-except:
-    logo_html = "<h2>محمية غلة الخير</h2>"
+# تأكد أن ملف الصورة موجود بنفس المجلد وبنفس الاسم
+logo_filename = "logo.png" 
 
-# --- التصميم المتقدم (CSS Injection) ---
-# هنا يكمن سر الفخامة والتحكم بالاتجاه
+if os.path.exists(logo_filename):
+    encoded_logo = get_base64_of_bin_file(logo_filename)
+    logo_html = f'<img src="data:image/png;base64,{encoded_logo}" class="logo-img">'
+else:
+    logo_html = "<h1 style='color:#d4af37;'>محمية غلة الخير</h1>"
+
+# --- تصميم الـ CSS المتقدم ---
 st.markdown(f"""
     <style>
-    /* استيراد خطوط عربية فاخرة */
-    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;500;700&display=swap');
 
-    /* تنسيق الصفحة بالكامل */
+    /* تغيير الخلفية إلى البني العميق الفاخر */
     .stApp {{
-        background-color: #050505; /* أسود حالك */
-        background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000000 100%);
+        background: linear-gradient(135deg, #1e1510 0%, #3d2b1f 100%);
+        color: #f4ece1;
+        direction: rtl;
     }}
 
-    /* النصوص والخطوط */
-    html, body, p, div, label, input, textarea, button {{
-        font-family: 'Tajawal', sans-serif !important;
-        direction: rtl; /* إجبار الاتجاه من اليمين لليسار */
+    /* تنسيق المحتوى ليكون من اليمين */
+    div[data-testid="stVerticalBlock"] {{
+        direction: rtl;
         text-align: right;
     }}
 
-    h1, h2, h3 {{
-        font-family: 'Amiri', serif !important; /* خط أميري للعناوين */
-        color: #d4af37 !important; /* لون ذهبي */
-        text-align: center;
-    }}
-
-    /* تنسيق الشعار في المنتصف */
+    /* تحسين شكل الشعار والتحكم في ألوانه بصرياً */
     .logo-container {{
-        display: flex;
-        justify_content: center;
-        align-items: center;
-        padding: 20px 0;
-        margin-bottom: 20px;
+        text-align: center;
+        padding: 40px 0;
     }}
     .logo-img {{
-        max-width: 300px; /* حجم الشعار */
-        filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); /* توهج ذهبي خفيف */
+        max-width: 350px;
+        /* هذا الفلتر يحسن تباين الشعار الذهبي */
+        filter: drop-shadow(0px 0px 15px rgba(212, 175, 55, 0.4)) contrast(1.1);
     }}
 
-    /* البطاقات الشفافة (Glassmorphism) */
-    .custom-card {{
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(212, 175, 55, 0.2);
-        border-radius: 15px;
-        padding: 25px;
-        margin-bottom: 20px;
-        transition: transform 0.3s ease;
+    /* البطاقات بتصميم جلدي فاخر */
+    .vip-card {{
+        background: rgba(255, 255, 255, 0.03);
+        border-right: 4px solid #d4af37; /* خط ذهبي جهة اليمين */
+        border-radius: 10px;
+        padding: 30px;
+        margin: 15px 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        transition: 0.3s;
     }}
-    .custom-card:hover {{
-        transform: translateY(-5px);
-        border-color: rgba(212, 175, 55, 0.6);
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    .vip-card:hover {{
+        background: rgba(212, 175, 55, 0.05);
+        transform: scale(1.02);
     }}
 
-    /* تنسيق حقول الإدخال لتكون من اليمين */
-    .stTextInput input, .stTextArea textarea {{
-        direction: rtl; 
-        text-align: right;
-        background-color: #1a1a1a;
-        color: #d4af37;
-        border: 1px solid #d4af37;
+    /* العناوين */
+    h1, h2, h3 {{
+        font-family: 'Amiri', serif !important;
+        color: #d4af37 !important;
     }}
     
-    /* تنسيق الزر */
-    .stButton>button {{
-        background: linear-gradient(45deg, #d4af37, #b8860b);
-        color: black;
-        width: 100%;
-        font-weight: bold;
-        border: none;
-        padding: 10px;
+    /* أيقونات الأقسام */
+    .icon-style {{
+        font-size: 40px;
+        margin-bottom: 15px;
+        display: block;
     }}
 
-    /* إخفاء القوائم العلوية */
-    #MainMenu {{visibility: hidden;}}
-    header {{visibility: hidden;}}
-    footer {{visibility: hidden;}}
+    /* إخفاء واجهة ستريمليت الافتراضية */
+    #MainMenu, header, footer {{visibility: hidden;}}
     </style>
     """, unsafe_allow_html=True)
 
-# --- محتوى الصفحة ---
+# --- محتوى الموقع ---
 
-# 1. عرض الشعار
+# عرض الشعار
 st.markdown(f'<div class="logo-container">{logo_html}</div>', unsafe_allow_html=True)
 
-# 2. الترحيب (نص متحرك بسيط أو ثابت بفخامة)
-st.markdown("""
-    <div style='text-align: center; padding: 20px;'>
-        <h1 style='font-size: 2.5em; margin-bottom: 10px;'>أهلاً بضيوف "غلة الخير"</h1>
-        <p style='color: #cccccc; font-size: 1.2em;'>حيث الأصالة تعانق الطبيعة في ضيافة (M.F)</p>
-    </div>
-    <hr style='border-color: #d4af37; opacity: 0.3;'>
-""", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center;'>مجلس الضيافة الخاص</h2>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#f4ece1; font-size:1.2em;'>نتشرف بزيارتكم في محمية ومزرعة غلة الخير</p>", unsafe_allow_html=True)
 
-# 3. الأقسام (باستخدام HTML مخصص داخل Markdown لضمان التصميم)
-# نستخدم الأعمدة لترتيب البطاقات
+st.write("---")
+
+# توزيع الأقسام
 col1, col2, col3 = st.columns(3)
 
 with col1:
     st.markdown("""
-    <div class="custom-card">
-        <h3 style="text-align: center;">🐪 أصالة الإبل</h3>
-        <p style="color: #ddd; line-height: 1.8;">
-        نعتز في "غلة الخير" بامتلاك سلالات نادرة من الإبل، رمز تراثنا وفخرنا (M.F)، حيث يمكن للضيوف الاستمتاع بمشاهدتها في بيئتها الطبيعية.
-        </p>
+    <div class="vip-card">
+        <span class="icon-style">🏛️</span>
+        <h3>المجلس الملكي</h3>
+        <p>خصوصية تامة وتجهيزات تليق بمقام ضيوفنا الكرام، في قلب الطبيعة الهادئة.</p>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
     st.markdown("""
-    <div class="custom-card">
-        <h3 style="text-align: center;">🌴 المزرعة والخيرات</h3>
-        <p style="color: #ddd; line-height: 1.8;">
-        واحة غناء تضم أجود أنواع النخيل والمزروعات العضوية. نقدم لضيوفنا الكرام ما تجود به أرض المحمية من خيرات طازجة.
-        </p>
+    <div class="vip-card">
+        <span class="icon-style">🦌</span>
+        <h3>المحمية الخاصة</h3>
+        <p>جولة بين سلالات الإبل والمها العربي، تجربة برية فريدة بروح الأصالة.</p>
     </div>
     """, unsafe_allow_html=True)
 
 with col3:
     st.markdown("""
-    <div class="custom-card">
-        <h3 style="text-align: center;">☕ مجلس الضيافة</h3>
-        <p style="color: #ddd; line-height: 1.8;">
-        مجلس يجمع بين فخامة التجهيز وعبق الماضي، مجهز لاستقبال كبار الشخصيات والضيوف الأعزاء في جو من الخصوصية التامة.
-        </p>
+    <div class="vip-card">
+        <span class="icon-style">🌳</span>
+        <h3>خيرات المزرعة</h3>
+        <p>نقدم لضيوفنا أجود ما تنتجه مزارعنا من تمور وفواكه عضوية طازجة.</p>
     </div>
     """, unsafe_allow_html=True)
 
-# 4. معرض صور (متحرك/سلايدر)
-st.markdown("<h2 style='padding-top: 30px;'>من قلب المحمية</h2>", unsafe_allow_html=True)
-# ملاحظة: استبدل الروابط بصور حقيقية من المحمية لاحقاً
-images = [
-    "https://images.unsplash.com/photo-1590634685366-0f72381f9645?auto=format&fit=crop&w=800&q=80", # صورة إبل
-    "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80", # صورة نخيل/مزرعة
-    "https://images.unsplash.com/photo-1534068590799-09895a701e3e?auto=format&fit=crop&w=800&q=80", # صورة قهوة
-]
-st.image(images, width=None, caption=["شموخ الإبل", "خيرات المزرعة", "الضيافة العربية"], use_column_width=False)
+st.write("##")
 
+# قسم الصور (تأكد من استبدالها بصور حقيقية لاحقاً)
+st.markdown("<h3>📸 لقطات من المحمية</h3>", unsafe_allow_html=True)
+# استخدم صوراً عرضية (Landscape) لجمالية التصميم
+img_url = "https://images.unsplash.com/photo-1542332213-31f87348057f?auto=format&fit=crop&w=1200&q=80"
+st.image(img_url, caption="غروب الشمس في غلة الخير", use_column_width=True)
 
-# 5. سجل الزوار (النموذج)
-st.markdown("<hr style='border-color: #d4af37; opacity: 0.3; margin-top: 50px;'>", unsafe_allow_html=True)
-st.markdown("<h3>📝 سجل كبار الزوار</h3>", unsafe_allow_html=True)
+# سجل الزوار بتنسيق أنيق
+st.write("---")
+st.markdown("<h3 style='text-align:center;'>🤝 تواصل معنا</h3>", unsafe_allow_html=True)
 
-# وضع النموذج في المنتصف ليكون أنيقاً
-empty1, form_col, empty2 = st.columns([1, 2, 1])
-
-with form_col:
-    with st.form("vip_guest_book"):
-        st.markdown("<p style='text-align: center; color: #aaa;'>يسعدنا تدوين زيارتكم الكريمة</p>", unsafe_allow_html=True)
+c1, c2, c3 = st.columns([1,2,1])
+with c2:
+    with st.form("visitor_form"):
         name = st.text_input("الاسم الكريم")
-        msg = st.text_area("كلمة للمكان وأهله")
-        
-        submitted = st.form_submit_button("تدوين الزيارة")
+        contact = st.text_input("رقم الجوال / وسيلة التواصل")
+        note = st.text_area("رسالة إلى المضيف")
+        submitted = st.form_submit_button("إرسال البيانات")
         if submitted:
-            st.success(f"شرفت ونورت يا {name}، تدوينتك وسام على صدورنا.")
+            st.success("تم استلام بياناتك بنجاح، نتشرف بك.")
 
-# تذييل الصفحة
-st.markdown("""
-    <div style='text-align: center; margin-top: 50px; color: #555; font-size: 0.8em;'>
-    تصميم خاص لـ محمية غلة الخير (M.F) | جميع الحقوق محفوظة
-    </div>
-""", unsafe_allow_html=True)
+# تذييل
+st.markdown("<p style='text-align:center; color:#888; margin-top:50px;'>محمية غلة الخير - M.F © 2024</p>", unsafe_allow_html=True)
